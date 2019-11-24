@@ -1,0 +1,59 @@
+{
+  "ohno": {
+    "subtitle": "Oh no!",
+    "sounds": [
+      "skychase:ohno"
+    ]
+  },
+  "icant": {
+    "subtitle": "I can't!",
+    "sounds": [
+      "skychase:icant"
+    ]
+  },
+  "herewego": {
+    "subtitle": "Here we go!",
+    "sounds": [
+      "skychase:herewego"
+    ]
+  },
+  "itsover": {
+    "subtitle": "It's over...",
+    "sounds": [
+      "skychase:itsover"
+    ]
+  },
+  "rats": {
+    "subtitle": "Rats...",
+    "sounds": [
+      "skychase:rats"
+    ]
+  },
+  "knux": {
+    "replace": true,
+    "sounds": [
+      "skychase:knux1",
+      "skychase:knux2",
+      "skychase:knux3",
+      "skychase:knux4",
+      "skychase:knux5",
+      "skychase:knux6",
+      "skychase:knux7",
+      "skychase:knux8",
+      "skychase:knux9"
+    ]
+  },
+  "ring_get": {
+    "subtitle": "Ring get",
+    "sounds": [
+      "skychase:ring_get"
+    ]
+  },
+  "ring_drop": {
+    "subtitle": "Drops rings",
+    "sounds": [
+      "skychase:ring_drop"
+    ]
+  }
+}
+

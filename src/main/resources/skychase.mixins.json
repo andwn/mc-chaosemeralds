@@ -1,0 +1,13 @@
+{
+  "required": true,
+  "package": "zone.skychase.chaosemeralds.mixins",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+    "PlayerDamageMixin"
+  ],
+  "client": [
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "id": "skychase",
+  "version": "0.1.0",
+  "name": "Chaos Emeralds",
+  "description": "Unlike Obama I don't chuckle",
+  "contact": {
+    "homepage": "https://skychase.zone/",
+    "twitter": "https://twitter.com/donutgrind",
+    "sources": "https://github.com/andwn/mc-chaosemeralds"
+  },
+  "entrypoints": {
+    "main": [
+      "zone.skychase.chaosemeralds.ChaosEmeraldsMod"
+    ]
+  },
+  "mixins": [
+    "skychase.mixins.json", {
+      "config": "skychase.client-mixins.json",
+      "environment": "client"
+    }
+  ],
+  "license": "MIT",
+  "icon": "assets/skychase/icon.png"
+}
