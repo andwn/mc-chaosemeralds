@@ -4,6 +4,7 @@ import com.mojang.authlib.GameProfile;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.ActionResult;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Implements;
 import org.spongepowered.asm.mixin.Interface;
@@ -22,7 +23,7 @@ public class PlayerDamageMixin {
     private int skychase_knuxVoiceTime;
 
     @Inject(method = "<init>", at = @At("RETURN"))
-    private void onCreate(World world, GameProfile profile, CallbackInfo info) {
+    private void onCreate(World world, BlockPos blockPos, GameProfile profile, CallbackInfo info) {
         skychase_invulnerableTime = 0;
         skychase_knuxVoiceTime = 0;
     }

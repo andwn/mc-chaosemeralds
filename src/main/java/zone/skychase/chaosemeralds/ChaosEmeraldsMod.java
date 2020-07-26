@@ -1,29 +1,25 @@
 package zone.skychase.chaosemeralds;
 
-import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.world.WorldTickCallback;
 import net.fabricmc.fabric.api.loot.v1.FabricLootPoolBuilder;
 import net.fabricmc.fabric.api.loot.v1.event.LootTableLoadingCallback;
 import net.fabricmc.fabric.api.loot.v1.LootJsonParser;
-import net.minecraft.client.particle.Particle;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.*;
-import net.minecraft.particle.DustParticleEffect;
-import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
-import net.minecraft.world.loot.ConstantLootTableRange;
-import net.minecraft.world.loot.LootPool;
-import net.minecraft.world.loot.condition.SurvivesExplosionLootCondition;
-import net.minecraft.world.loot.entry.LootEntry;
+import net.minecraft.loot.ConstantLootTableRange;
+import net.minecraft.loot.LootPool;
+import net.minecraft.loot.condition.SurvivesExplosionLootCondition;
+import net.minecraft.loot.entry.ItemEntry;
 
 import java.util.Arrays;
 import java.util.List;
@@ -68,11 +64,11 @@ public class ChaosEmeraldsMod implements ModInitializer {
                     "endermite", "shulker", "silverfish", "pillager"
             );
             if (strings.stream().anyMatch(s -> id.toString().contains(s))) {
-                LootEntry entryFromString = LootJsonParser.read(LOOT_ENTRY_JSON, LootEntry.class);
+                ItemEntry entryFromString = LootJsonParser.read(LOOT_ENTRY_JSON, ItemEntry.class);
                 LootPool pool = FabricLootPoolBuilder.builder()
                         .withEntry(entryFromString)
-                        .withRolls(ConstantLootTableRange.create(1)) // Always
-                        .withCondition(SurvivesExplosionLootCondition.builder())
+                        .rolls(ConstantLootTableRange.create(1)) // Always
+                        .withCondition(SurvivesExplosionLootCondition.builder().build())
                         .build();
 
                 supplier.withPool(pool);
@@ -100,11 +96,11 @@ public class ChaosEmeraldsMod implements ModInitializer {
             // Play sound when hit
             if (InventoryHelper.playerHasItem(player, "item.skychase.chaos_emerald")) {
                 if (InventoryHelper.playerHasItem(player, "item.skychase.power_ring")) {
-                    player.world.playSound(null, player.x, player.y, player.z, OHNO_EVENT,
+                    player.world.playSound(null, player.getX(), player.getY(), player.getZ(), OHNO_EVENT,
                             SoundCategory.MASTER, 1, 1);
                 }
             } else if (InventoryHelper.playerHasItem(player, "item.skychase.power_ring")) {
-                player.world.playSound(null, player.x, player.y, player.z, RING_DROP_EVENT,
+                player.world.playSound(null, player.getX(), player.getY(), player.getZ(), RING_DROP_EVENT,
                         SoundCategory.MASTER, 1, 1);
             }
 
@@ -113,8 +109,8 @@ public class ChaosEmeraldsMod implements ModInitializer {
             for(;;) {
                 int index = InventoryHelper.playerItemIndex(player, "item.skychase.power_ring");
                 if(index == -1) break;
-                ItemStack stack = player.inventory.takeInvStack(index, 1);
-                ItemEntity ringEntity = new ItemEntity(player.world, player.x, player.y, player.z, stack);
+                ItemStack stack = player.inventory.removeStack(index, 1);
+                ItemEntity ringEntity = new ItemEntity(player.world, player.getX(), player.getY(), player.getZ(), stack);
                 ringEntity.setPickupDelay(20);
                 double x = rand.nextDouble(-0.5, 0.5);
                 double y = rand.nextDouble(0.25, 0.5);
@@ -140,15 +136,15 @@ public class ChaosEmeraldsMod implements ModInitializer {
                 int knuxTime = skychasePlayer.getKnuxVoiceTime();
                 if(invulnTime > 0) {
                     // Quick and dirty portal particle
-                    double x = player.x + rand.nextDouble(-0.5, 0.5);
-                    double y = player.y + rand.nextDouble(0.5, 1.0);
-                    double z = player.z + rand.nextDouble(-0.5, 0.5);
+                    double x = player.getX() + rand.nextDouble(-0.5, 0.5);
+                    double y = player.getY() + rand.nextDouble(0.5, 1.0);
+                    double z = player.getZ() + rand.nextDouble(-0.5, 0.5);
                     world.addParticle(ParticleTypes.PORTAL, x, y, z, 0, 0, 0);
                     // Annoy the player with a random Knuckles quote every 10 seconds
                     if(knuxTime > 0) {
                         knuxTime--;
                         if(knuxTime == 0) {
-                            world.playSound(null, player.x, player.y, player.z, KNUX_EVENT,
+                            world.playSound(null, player.getX(), player.getY(), player.getZ(), KNUX_EVENT,
                                     SoundCategory.MASTER, 1, 1);
                             knuxTime = 200;
                         }
@@ -159,14 +155,14 @@ public class ChaosEmeraldsMod implements ModInitializer {
                         // Reached 0 ticks, consume ring or deactivate
                         int index = InventoryHelper.playerItemIndex(player, "item.skychase.power_ring");
                         if(index != -1) {
-                            ItemStack stack = player.inventory.getInvStack(index);
+                            ItemStack stack = player.inventory.getStack(index);
                             stack.decrement(1);
                             //player.inventory.removeOne(stack);
                             invulnTime = 20;
-                            world.playSound(null, player.x, player.y, player.z, RING_GET_EVENT,
+                            world.playSound(null, player.getX(), player.getY(), player.getZ(), RING_GET_EVENT,
                                     SoundCategory.MASTER, 0.5f, 1);
                         } else {
-                            world.playSound(null, player.x, player.y, player.z, RATS_EVENT,
+                            world.playSound(null, player.getX(), player.getY(), player.getZ(), RATS_EVENT,
                                     SoundCategory.MASTER, 1, 1);
                         }
                     }
