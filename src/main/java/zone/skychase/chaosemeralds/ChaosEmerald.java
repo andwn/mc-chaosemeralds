@@ -1,18 +1,13 @@
 package zone.skychase.chaosemeralds;
 
-import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.sound.SoundCategory;
-import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
-
-import java.util.List;
 
 import static zone.skychase.chaosemeralds.ChaosEmeraldsMod.*;
 
@@ -29,7 +24,7 @@ public class ChaosEmerald extends Item {
             if(skychasePlayer.getInvulnerableTime() > 0) {
                 // Deactivate
                 skychasePlayer.setInvulnerableTime(0);
-                player.world.playSound(null, player.x, player.y, player.z, KNUX_EVENT,
+                player.world.playSound(null, player.getX(), player.getY(), player.getZ(), KNUX_EVENT,
                         SoundCategory.MASTER, 1, 1);
             } else {
                 // Activate
@@ -38,10 +33,10 @@ public class ChaosEmerald extends Item {
                 if (emeralds >= 7 && rings >= 1) {
                     skychasePlayer.setInvulnerableTime(20);
                     skychasePlayer.setKnuxVoiceTime(100);
-                    player.world.playSound(null, player.x, player.y, player.z, HEREWEGO_EVENT,
+                    player.world.playSound(null, player.getX(), player.getY(), player.getZ(), HEREWEGO_EVENT,
                             SoundCategory.MASTER, 1, 1);
                 } else {
-                    player.world.playSound(null, player.x, player.y, player.z, ICANT_EVENT,
+                    player.world.playSound(null, player.getX(), player.getY(), player.getZ(), ICANT_EVENT,
                             SoundCategory.MASTER, 1, 1);
                 }
             }

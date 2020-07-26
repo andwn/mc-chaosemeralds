@@ -1,7 +1,6 @@
 package zone.skychase.chaosemeralds;
 
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 public class InventoryHelper {
